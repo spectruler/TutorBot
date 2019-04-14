@@ -1,0 +1,52 @@
+<% include partials/header %>
+
+<div id="main">
+    <div class="main">
+        <form action="/register" method="post">
+
+            <h1>
+                Register
+            </h1>
+
+            <div class="inset">
+                <p>
+                  <label for="firstname">First Name</label>
+                  <input type="text" name="firstname" class="" placeholder="First Name" required>
+                </p>
+
+                <p>
+                    <label for="lastname">Last Name</label>
+                    <input type="text" name="lastname" class="" placeholder="Last Name" reqired> 
+                </p>
+
+                <p>
+                    <label for="email">Email</label>
+                    <input type="text" name="username" placeholder="Email" />
+                </p>
+                <p>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" placeholder="Password" />
+                </p>
+
+                <p>
+                    <label for="status">Status</label>
+                    <select name='status' class='container'>
+                        <option value="student">Student</option>
+                        <option value="tutor">Tutor</option>
+                    </select>
+                </p>
+
+            </div>
+            <div class='container'>
+                <p class="p-container">
+                    <span><a href="/signin" class='btn btn-danger'>Login</a></span>
+                    <input type="submit" class="login-log btn" value="Register">
+                </p>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<% include partials/footer %>

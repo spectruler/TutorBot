@@ -4,7 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Online Tutor Bot</title>
+    <link rel="stylesheet" 
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+    crossorigin="anonymous">
+    <link rel='stylesheet' href="/css/login.css" type="text/css">
 </head>
 <body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+                <h1 class="logo-div">
+                        <a href="/">Online Tutor Bot</a>
+                </h1>
+        </div>
+        <nav class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" >
+                <%if(!currentUser){%>
+                    <li>
+                    <a href="/signin">Login</a>
+                </li>
+                <li>
+                    <a href="/register">Sign Up</a>
+                </li>  
+                <% }else{ %>
+                <li><a href="#">Signed as <%=currentUser.username %></a></li>    
+                <li>
+                    <a href="/logout">Logout</a>
+                </li>  
+                <% }%>
+                
+            </ul>
+        </nav>
+    </div>
+
+</nav>
+
+
+<div class="container">
+    <% if (error && error.length > 0 ) {%>
+    <div class="alert alert-danger" role="alert">
+        <%= error %>
+    </div>
+    <%  } %>
+    <% if (success && success.length > 0) {%>
+    <div class="alert alert-success" role="alert">
+        <%= success %>
+    </div>
+    <% } %>
+</div>
+
+
     
