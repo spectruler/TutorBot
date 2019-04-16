@@ -24,6 +24,9 @@ const IndexRoutes = require('./routes'),
       AdminRoutes = require('./routes/admin.js'),
       TutorRoutes = require('./routes/tutor')
 
+//importing middleware
+const middleware = require('./middleware')
+
 
 
 global.Promise
@@ -66,7 +69,7 @@ app.use(function(req,res,next){
 
 //using routes
 app.use(IndexRoutes)
-app.use(AdminRoutes)
+app.use('/admin',AdminRoutes)
 app.use("/tutor",TutorRoutes)
 
 

@@ -2,9 +2,11 @@ const router = require('express').Router(),
       path = require('path'),
       fs = require('fs'),
       formidable = require('formidable'),
-      Tutor = require('../models/tutor')
+      Tutor = require('../models/tutor'),
+      Field = require("../models/field"),
+      middleware = require('../middleware')
 
-router.get('/info',function(req,res){
+router.get('/info',middleware.isTutorLoggedIn,function(req,res){
     res.render('tutor/info',{user:req.user})
 })
 
@@ -31,7 +33,7 @@ router.post('/upload',function(req,res){
 
 })
 
-router.post('/info',(req,res)=>{
+router.post('/info',middleware.isTutorLoggedIn,(req,res)=>{
     req.body.tutor.firstname = req.user.firstname
     req.body.tutor.lastname = req.user.lastname
     req.body.tutor.email = req.user.username
@@ -41,6 +43,33 @@ router.post('/info',(req,res)=>{
             req.flash('error',err)
             res.redirect('/tutor/info')
         }else{
+            res.redirect('/tutor/add/subject')
+        }
+    })
+})
+
+router.get('/add/subject',middleware.isTutorLoggedIn,(req,res)=>{
+    // show fields in subjects
+    //reference them in tutor field
+    Field.find({},(err,field)=>{
+        if(err){
+            console.log(err)
+            req.flash('error',err)
+            res.redirect('/')
+        }else{
+            res.render('tutor/addsubject',{fields:field})
+        }
+    })
+})
+
+router.post('/add/subject',middleware.isTutorLoggedIn,(req,res)=>{
+    Tutor.findOne({email:req.user.username},function(err,tutor){
+        if(err){
+            console.log(err)
+            req.flash('error',err)
+        }else{
+            tutor.subjects.push(req.body.tutor.subjects)
+            tutor.save()
             res.redirect('/')
         }
     })

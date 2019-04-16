@@ -19,7 +19,7 @@
                         </div>
 
                         <div class="form-group">
-                                <input class="form-control" type="text" name="tutor[graduation]" placeholder="graduation year" list="tutor[graduation]">
+                                <input class="form-control" type="text" name="tutor[graduation]" autocomplete="off" placeholder="graduation year" list="tutor[graduation]">
                                 <datalist id="tutor[graduation]">
                                     <% for (var year = 2023; year >= 1975; year--){%>
                                         <option value="<%=year%>"><%=year%></option>

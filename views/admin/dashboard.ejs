@@ -14,12 +14,12 @@
 <body>
     <% include ../partials/bodyheader %>
     <div class="container">
-        <form action="/dashboard" method="post">
+        <form action="/admin/add" method="post">
             <p class="btn-warning"> Little Help: Field input has datalist open it for fields</p>
-            <input type="text" list="field[field]" name="field[field]" placeholder="Field"/ >
+            <input type="text" list="field[field]" name="field[field]" autocomplete="off" placeholder="Field" / >
             <datalist id = "field[field]">
                 <% fields.forEach(function(field){%>
-                    <option value="<%=field.field%>"><%= field.field %></option>
+                    <option value="<%=field.field%>"><%= field.field %> </option>
                 <%})%>
             </datalist>
 

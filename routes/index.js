@@ -10,7 +10,7 @@ router.get("/register",function(req,res){
 router.post("/register",function(req,res){
     User.register(new User({firstname:req.body.firstname, lastname: req.body.lastname, username: req.body.username,status:req.body.status})
     ,req.body.password,function(err,user){
-        console.log(req.body.firstname, req.body.lastname, req.body.email,req.body.status)
+        console.log(req.body.firstname, req.body.lastname, req.body.username,req.body.status,req.body.password)
         if(err){
             console.log(err)
             req.flash("error",err.message)

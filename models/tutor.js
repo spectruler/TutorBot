@@ -10,7 +10,8 @@ TutorSchema = new mongoose.Schema({
     major: String,
     country: String,
     email: String,
-    password: String
+    password: String,
+    subjects: [String]
 })
 mongoose.plugin(passportLocalMongoose)
 
