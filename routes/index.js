@@ -18,7 +18,11 @@ router.post("/register",function(req,res){
         }
         passport.authenticate("local")(req,res,()=>{
             req.flash("success","Welcome to online tutor bot",+user.firstname+" "+user.lastname)
-            res.redirect("/")
+            if (req.body.status == 'student'){
+                res.redirect("/")
+            }else{
+                res.redirect("/tutor/info",{user:user})
+            }
         })
     })
 })
@@ -29,8 +33,17 @@ router.get("/signin",function(req,res){
     res.render('login')
 })
 
-router.post("/signin",function(req,res){
+router.post("/signin",passport.authenticate("local",{
+    successRedirect: "/tutor/info",
+    failure: "/signin"
+}),function(req,res){
 
+
+})
+
+router.get('/logout',(req,res)=>{
+    req.logout();
+    res.redirect('/register')
 })
 
 module.exports = router;

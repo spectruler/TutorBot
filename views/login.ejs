@@ -1,0 +1,36 @@
+<% include partials/header %>
+
+<div id="main">
+    <div class="main">
+        <form action="/signin" method="post">
+
+            <h1>
+                Login Page
+            </h1>
+
+            <div class="inset">
+
+                <p>
+                    <label for="email">Email</label>
+                    <input type="text" name="username" placeholder="Email" />
+                </p>
+                <p>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" placeholder="Password" />
+                </p>
+
+
+            </div>
+            <div class='container'>
+                <p class="p-container">
+                    <span><a href="/register" class='btn btn-danger'>Register</a></span>
+                    <input type="submit" class="login-log btn" value="Login">
+                </p>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<% include partials/footer %>

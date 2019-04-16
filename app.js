@@ -5,6 +5,7 @@ const express = require('express'),
     flash = require('connect-flash'),
     bodyParser = require('body-parser'),
     http = require('http'),
+    path = require('path'),
     methodOverride = require('method-override'),
     passport = require('passport'),
     LocalStrategy = require('passport-local'),
@@ -13,11 +14,18 @@ const express = require('express'),
     session = require('express-session'),
     MongoStore = require('connect-mongo')(session),
     mongoose = require('mongoose'),
-
-    User = require('./models/user')
+    formidable = require('formidable'),
+    User = require('./models/user'),
+    Field = require('./models/field'),
+    Tutor = require('./models/tutor')
 
 //importing routes
-const IndexRoutes = require('./routes')
+const IndexRoutes = require('./routes'),
+      AdminRoutes = require('./routes/admin.js'),
+      TutorRoutes = require('./routes/tutor')
+
+
+
 global.Promise
 mongoose.connect('mongodb://localhost/online_tutor_bot')
 
@@ -58,9 +66,11 @@ app.use(function(req,res,next){
 
 //using routes
 app.use(IndexRoutes)
+app.use(AdminRoutes)
+app.use("/tutor",TutorRoutes)
 
 
-
+//const server = http.createServer(app)
 app.listen(3000,()=>{
     console.log("Online Tutor Bot has been Started!")
 })

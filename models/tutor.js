@@ -4,11 +4,10 @@ var mongoose = require('mongoose'),
 TutorSchema = new mongoose.Schema({
     firstName: {type:String},
     lastName: {type:String},
-    cell: {type:Number, unique: true},
     tutorImage: String,
-    graduation: Date,
+    graduation: String,
     school: String,
-    majors: String,
+    major: String,
     country: String,
     email: String,
     password: String
