@@ -15,12 +15,12 @@
 
                         <div class="form-group">
                                 <button class="btn btn-lg upload-btn" type="button">Upload Image</button>
-                                <input type="file" name="tutor[tutorImage]" id="upload-input" style="display:none">
+                                <input type="file" name="tutor[tutorImage]" id="upload-input" style="display:none" required>
                         </div>
 
                         <div class="form-group">
                                 <input class="form-control" type="text" name="tutor[graduation]" autocomplete="off" placeholder="graduation year" list="tutor[graduation]">
-                                <datalist id="tutor[graduation]">
+                                <datalist id="tutor[graduation]" required>
                                     <% for (var year = 2023; year >= 1975; year--){%>
                                         <option value="<%=year%>"><%=year%></option>
                                     <%}%>
@@ -28,11 +28,11 @@
                         </div>
 
                         <div class="form-group">
-                                <input class="form-control" type="text" name="tutor[school]" placeholder="school">
+                                <input class="form-control" type="text" name="tutor[school]" placeholder="school" required>
                         </div>
 
                         <div class="form-group">
-                                <input class="form-control" type="text" name="tutor[major]" placeholder="major">
+                                <input class="form-control" type="text" name="tutor[major]" placeholder="major" required>
                         </div>
 
                         <div class="form-group">

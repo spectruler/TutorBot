@@ -12,8 +12,9 @@ const express = require('express'),
     cookieParser = require('cookie-parser'),
     validator = require('express-validator'),
     session = require('express-session'),
-    MongoStore = require('connect-mongo')(session),
     mongoose = require('mongoose'),
+    async = require('async'),
+    _ = require('lodash'),
     formidable = require('formidable'),
     User = require('./models/user'),
     Field = require('./models/field'),
@@ -52,13 +53,11 @@ app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.locals._ = _ //declaring as global local
+
 passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
-
-app.get("/",(req,res)=>{
-    res.render("index.ejs")
-})
 
 app.use(function(req,res,next){
     res.locals.currentUser = req.user;
@@ -66,6 +65,7 @@ app.use(function(req,res,next){
     res.locals.success = req.flash("success")
     next()
 })
+
 
 //using routes
 app.use(IndexRoutes)

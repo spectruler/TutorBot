@@ -13,7 +13,7 @@ router.get('/dashboard',(req,res)=>{
             res.redirect('/add')
         }else{
 
-            res.render('admin/view',{fields:field})
+            res.render('admin/dashboard',{fields:field})
         }
     })
 })
@@ -24,12 +24,13 @@ router.get('/add',function(req,res){
             console.log(err)
             req.flash("error",err)
         }else{
-            res.render('admin/dashboard',{fields:field})
+            res.render('admin/add',{fields:field})
         }
     })
 })
 
 router.post('/add',function(req,res){
+    console.log(req.body.field)
     Field.findOne({'field':req.body.field.field},(err,field)=>{
         if (err){
             //field already doesn't exist add
@@ -45,12 +46,27 @@ router.post('/add',function(req,res){
             })
 
         }else{
-            field.subject.push(req.body.field.subject)
-            field.save()
+            if(field == null){
+                Field.create(req.body.field,(err,field)=>{
+                    if(err){
+                        console.log(err)
+                        req.flash('error',err)
+                        res.redirect('/admin/add')
+                    }else{
+                        req.flash('success','Successfully added')
+                        res.redirect('/admin/dashboard')
+                    }
+                })
+    
+            }else{
+                field.subject.push(req.body.field.subject)
+                field.save()
+    
+                req.flash('success','Successfully added')
+                res.redirect('/admin/dashboard')
+            
+            }
 
-            req.flash('success','Successfully added')
-            res.redirect('/admin/dashboard')
-        
             /*
             Field.findOneAndUpdate(field.field,(err,fields)=>{
                 if(err){

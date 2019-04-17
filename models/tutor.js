@@ -2,14 +2,14 @@ var mongoose = require('mongoose'),
     passportLocalMongoose = require('passport-local-mongoose')
 
 TutorSchema = new mongoose.Schema({
-    firstName: {type:String},
-    lastName: {type:String},
+    firstname: String,
+    lastname: String,
     tutorImage: String,
     graduation: String,
     school: String,
     major: String,
     country: String,
-    email: String,
+    email: {type: String, unique:true, require:true},
     password: String,
     subjects: [String]
 })

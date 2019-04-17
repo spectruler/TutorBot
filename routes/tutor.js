@@ -11,7 +11,6 @@ router.get('/info',middleware.isTutorLoggedIn,function(req,res){
 })
 
 router.post('/upload',function(req,res){
-    console.log("entered in info post mode")
     var form = new formidable.IncomingForm()
     form.uploadDir = path.join(__dirname, '../public/uploads')
     form.on('file',(field,file)=>{
@@ -37,6 +36,7 @@ router.post('/info',middleware.isTutorLoggedIn,(req,res)=>{
     req.body.tutor.firstname = req.user.firstname
     req.body.tutor.lastname = req.user.lastname
     req.body.tutor.email = req.user.username
+    console.log(req.body.tutor)
     Tutor.create(req.body.tutor,(err,tutor)=>{
         if(err){
             console.log(err)
@@ -63,6 +63,11 @@ router.get('/add/subject',middleware.isTutorLoggedIn,(req,res)=>{
 })
 
 router.post('/add/subject',middleware.isTutorLoggedIn,(req,res)=>{
+    if(req.body.tutor == null){
+        console.log(true)
+        req.flash('error','choose atleast one subject')
+        return res.redirect('/tutor/add/subject')
+    }
     Tutor.findOne({email:req.user.username},function(err,tutor){
         if(err){
             console.log(err)

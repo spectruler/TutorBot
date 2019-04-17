@@ -1,39 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" 
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
-    crossorigin="anonymous">
-    <link rel='stylesheet' href="/css/login.css" type="text/css">
-</head>
-<body>
-    <% include ../partials/bodyheader %>
-    <div class="container">
-        <form action="/admin/add" method="post">
-            <p class="btn-warning"> Little Help: Field input has datalist open it for fields</p>
-            <input type="text" list="field[field]" name="field[field]" autocomplete="off" placeholder="Field" / >
-            <datalist id = "field[field]">
-                <% fields.forEach(function(field){%>
-                    <option value="<%=field.field%>"><%= field.field %> </option>
-                <%})%>
-            </datalist>
+<% include ../partials/header %>
 
-            <input type="text" name='field[subject]' placeholder="Subject">
-            <button class="btn btn-lg upload-btn">Create</button>
-        </form>        
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">
+                Admin dashboard
+            </p>
+            <p class="list-group">
+                <li class="list-group-item"><a href="/admin/add" class="btn btn-primary"> Add Subjects</a></li>
+            </p>
+        </div>
     </div>
+    <div class="row text-center" style="">
+        <div class="col-lg-12">
+            <h3>Fields!</h3>    
+            <% fields.forEach(function(field){%>
+                        <div class="col-md-3 col-sm-6">
+                                    <ul ><h2><%= field.field %></h2></ul> <!-- add collapse effect -->
+                                    <% field.subject.forEach(function(sub){ %>
+                                        <div>
+                                                <p><li style="list-style-type: none; display:block"> <%= sub %></li></p>
+                                        </div>
+                                    <%})%>
+            <%})%>
+        </div>
+    </div>
+</div>
+</div>
 
-
-    <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" 
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" 
-    crossorigin="anonymous"></script>
-</body>
-</html>
+<% include ../partials/footer %>
