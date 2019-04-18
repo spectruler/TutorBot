@@ -8,34 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-<nav class="navbar navbar-default">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">Online Tutor Bot</a>
-    </div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Members</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdpwn <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-  
+<%- include partials/navbar %>
 <div class="col-md-12">
    <form action="#" method="post">
        <div class="form-group ad-30" style="margin-top:8px;">
@@ -49,6 +22,29 @@
    </form>
 </div>
   
+
+
+<div class="col-md-12">
+        <form action="/post" method="post">
+            <div class="form-group ad-30" style="margin-top:8px;">
+                 <div class="input-group search-style">
+                        <textarea class="form-control" name="problem[statement]" id="msg" placeholder="Enter Questions"></textarea>
+                        <select name="problem[tag]" required>
+                                <% _.forEach(fields,function(field){%>
+                                    <% field._id.forEach(function(sub){%>
+                                        <option value="<%=sub%>"><%=sub%></option>
+                                    <%})%>
+                                <%})%>
+                        </select>
+                     <span class="" style="margin-top:3px; float:right;">
+                         <button class="btn input-btn" type="" id="problem-form">Post</button>
+                     </span>
+                 </div>
+             </div>
+        </form>
+     </div>
+       
+
 <div class="col-md-12">
     <div class="">
         <div class="row">
@@ -67,7 +63,7 @@
                                             <option value="x">Filter By Subjects</option>
                                             <% _.forEach(fields,function(field){%>
                                                 <% field._id.forEach(function(sub){%>
-                                                    <option value="<%sub%>"><%=sub%></option>
+                                                    <option value="<%=sub%>"><%=sub%></option>
                                                 <%})%>
                                             <%})%>
                                         </select>
@@ -93,7 +89,7 @@
                                                 <div class="thumbnail">
                                                     <img src="uploads/<%=val1.tutorImage%>"alt="">
                                                     <div class="caption">
-                                                        <h4><%=val1.firstname%></h4>
+                                                        <h4><%=val1.author.firstname%></h4>
                                                         
                                                         <div class="row">
                                                             <div class="col-xs-12 col-md-6">

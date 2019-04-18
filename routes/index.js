@@ -5,7 +5,9 @@ const express = require('express'),
       async = require('async'),
       _ = require('lodash'),
       Tutor = require('../models/tutor'),
-      Field = require('../models/field')
+      Field = require('../models/field'),
+      middleware = require('../middleware'),
+      Problem = require('../models/problem')
 
 
 
@@ -45,6 +47,26 @@ router.get('/',function(req,res){
 
         //console.log('data: '+dataChunk)
         res.render('index',{title:'Online Tutor Bot - Home',data:dataChunk,fields:result2})                
+    })
+})
+
+router.post('/post',middleware.isLoggedIn,(req,res)=>{
+    let author = {
+        id: req.user._id,
+        username: req.user.username
+    }
+    req.body.problem.author = author
+    console.log('tag: '+req.body.problem.tag)
+    console.log(req.body.problem)
+    Problem.create(req.body.problem,(err,problem)=>{
+        if(err){
+            console.log(err)
+            req.flash('error',err)
+            res.redirect('/')
+        }else{
+            req.flash('success','Successfully posted')
+            res.redirect('/')
+        }
     })
 })
 

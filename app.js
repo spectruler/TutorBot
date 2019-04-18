@@ -4,7 +4,8 @@ const express = require('express'),
     app = express(),
     flash = require('connect-flash'),
     bodyParser = require('body-parser'),
-    http = require('http'),
+    http = require('http').createServer(app),
+    io = require('socket.io')(http),
     path = require('path'),
     methodOverride = require('method-override'),
     passport = require('passport'),
@@ -23,11 +24,14 @@ const express = require('express'),
 //importing routes
 const IndexRoutes = require('./routes'),
       AdminRoutes = require('./routes/admin.js'),
-      TutorRoutes = require('./routes/tutor')
+      TutorRoutes = require('./routes/tutor'),
+      QuestionRoutes = require('./routes/question')
 
 //importing middleware
 const middleware = require('./middleware')
 
+
+require('./socket/groupchat')(io)
 
 
 global.Promise
@@ -67,13 +71,16 @@ app.use(function(req,res,next){
 })
 
 
+
+
 //using routes
 app.use(IndexRoutes)
 app.use('/admin',AdminRoutes)
 app.use("/tutor",TutorRoutes)
+app.use('/question',QuestionRoutes)
 
 
 //const server = http.createServer(app)
-app.listen(3000,()=>{
+http.listen(3000,()=>{
     console.log("Online Tutor Bot has been Started!")
 })
