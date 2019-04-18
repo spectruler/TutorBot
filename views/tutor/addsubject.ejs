@@ -6,13 +6,13 @@
         <div class="btn-block" style="display:block;">
                 <form action="/tutor/add/subject" method='post' >
                     <%fields.forEach(function(field){%>
-                        <button class="navbar-toggler row" type="button" data-toggle="collapse" data-target="#<%=field.field%>" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler row btn-block" type="button" data-toggle="collapse" data-target="#<%=field.field%>" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <h2 class="navbar-toggler-icon" style="margin-left:20px;"><a href="#"><%=field.field%></a></h2>
                         </button>
     
                         <div class="collapse navbar-collapse" id="<%=field.field%>" style="margin-bottom:20px; border-bottom:10px;">
                             <%field.subject.forEach((sub)=>{%>
-                                <div class='form-group'>
+                                <div class='form-group' style="margin-bottom:20px;">
                                         <input type='checkbox' value="<%=sub%>" name="tutor[subjects]"><%= sub %><br>
                                 </div>
                             <%})%>

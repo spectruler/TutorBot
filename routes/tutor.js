@@ -33,10 +33,14 @@ router.post('/upload',function(req,res){
 })
 
 router.post('/info',middleware.isTutorLoggedIn,(req,res)=>{
-    req.body.tutor.firstname = req.user.firstname
-    req.body.tutor.lastname = req.user.lastname
-    req.body.tutor.email = req.user.username
-    console.log(req.body.tutor)
+    console.log('/info')
+    var author = {
+        id: req.user._id,
+        username: req.user.username,
+        firstname: req.user.firstname,
+        lastname: req.user.lastname
+    }
+    req.body.tutor.author = author
     Tutor.create(req.body.tutor,(err,tutor)=>{
         if(err){
             console.log(err)
@@ -68,12 +72,20 @@ router.post('/add/subject',middleware.isTutorLoggedIn,(req,res)=>{
         req.flash('error','choose atleast one subject')
         return res.redirect('/tutor/add/subject')
     }
-    Tutor.findOne({email:req.user.username},function(err,tutor){
+    Tutor.findOne({'author.id':req.user._id},function(err,tutor){
         if(err){
             console.log(err)
             req.flash('error',err)
         }else{
-            tutor.subjects.push(req.body.tutor.subjects)
+            try{
+                req.body.tutor.subjects.forEach(function(sub){
+                    tutor.subjects.push(sub)
+                })
+            }
+            catch{
+                tutor.subjects.push(req.body.tutor.subjects)
+            }
+
             tutor.save()
             res.redirect('/')
         }

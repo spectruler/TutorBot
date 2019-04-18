@@ -16,30 +16,35 @@ router.get('/',function(req,res){
             Tutor.find({},(err,tutor)=>{
                     callback(err,tutor)
             })
+        },
+
+        function(callback){
+            Tutor.aggregate([
+                {$group: {_id: "$subjects"}} // check later
+            ],(err,result)=>{
+                callback(err,result)
+            })
         }
+
     ],(err,tutor)=>{
         if(err){
             console.log(err)
         }
-        const tut = tutor[0]
+        const tut = tutor[0] //callbacks using indexes
+        const result2 = tutor[1]; //second callback sinces index starts from 0 
+        //console.log(result2)
 
         const dataChunk = []
         const chunkSize = 3;
-        for (let i = 0 ; i < tut.length;i += chunkSize){
-            if(tut.length < chunkSize){
-            dataChunk.push(tut.slice((i,tutor.length-1)))
-            }else
-            dataChunk.push(tut.slice((i,i+chunkSize)))
+        for (let i = 0 ; i < tut.length;i += chunkSize ){
+            dataChunk.push(tut.slice(i,chunkSize))
         }
-        console.log(dataChunk)
-        Field.find({},(err,field)=>{
-            if(err){
-                console.log(err)
-                req.flash('error',err)
-            }else{
-                res.render('index',{title:'Online Tutor Bot - Home',data:dataChunk,fields:field})                
-            }
-        })
+
+        const sub_sort = _.sortBy(result2,'_id') //not working
+        //console.log(sub_sort)
+
+        //console.log('data: '+dataChunk)
+        res.render('index',{title:'Online Tutor Bot - Home',data:dataChunk,fields:result2})                
     })
 })
 
@@ -57,7 +62,7 @@ router.post("/register",function(req,res){
             return res.render("register")
         }
         passport.authenticate("local")(req,res,()=>{
-            req.flash("success","Welcome to online tutor bot"+ user.firstname +" "+ user.lastname)
+            req.flash("success","Welcome to online tutor bot "+ user.firstname +" "+ user.lastname)
             if (req.body.status == 'student'){
                 res.redirect("/")
             }else{
@@ -81,7 +86,7 @@ router.post("/signin",passport.authenticate("local",{
 
     }
     if (req.user.status == 'tutor'){
-        Tutor.findOne({'email':req.user.username},(err,tutor)=>{
+        Tutor.findOne({'author.username':req.user.username},(err,tutor)=>{
             if(err){
                 console.log(err)
             }else{
