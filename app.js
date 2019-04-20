@@ -19,7 +19,8 @@ const express = require('express'),
     formidable = require('formidable'),
     User = require('./models/user'),
     Field = require('./models/field'),
-    Tutor = require('./models/tutor')
+    Tutor = require('./models/tutor'),
+    {Users} = require('./middleware/UsersClass')//structuring ES6
 
 //importing routes
 const IndexRoutes = require('./routes'),
@@ -31,8 +32,10 @@ const IndexRoutes = require('./routes'),
 const middleware = require('./middleware')
 
 
-require('./socket/groupchat')(io)
+require('./socket/groupchat')(io,Users)
+require('./socket/request')(io)
 
+    
 
 global.Promise
 mongoose.connect('mongodb://localhost/online_tutor_bot')

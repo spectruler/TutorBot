@@ -8,8 +8,20 @@ var mongoose = require('mongoose'),
         password: String,
         status: String, //student / teacher
         google: {type:String, default: ''},
-        googleTokens: Array
-
+        googleTokens: Array,
+        sentRequest:[{
+                username: {type: String, default:''}
+        }],
+        request:[{
+            userId: {type: mongoose.Schema.Types.ObjectId, ref:'User'},
+            username: {type:String, default: ''}
+        }],
+        friendList:[{
+            frientId: {type:mongoose.Schema.Types.ObjectId, ref:'User'},
+            friendName:{type:String, default:''}
+        }],
+        totalRequest: {type: Number, default:0}        
+        
     })
 UserSchema.plugin(passportLocalMongoose)
 module.exports = mongoose.model('User', UserSchema)

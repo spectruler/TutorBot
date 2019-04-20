@@ -11,16 +11,42 @@ $(document).ready(function(){
 
         //to emit the joint events
         var params = {
-            room: room
+            room: room,
+            name: sender
         }
         socket.emit('joint',params,function(){
             console.log('User has joined this channel');
         })
     })
 
+    socket.on('userList',function(users){
+        var ol = $('<ol></ol>');
+
+        for(var i = 0;i < users.length;i++){
+            ol.append('<p><a id="val" data-toggle="modal" data-target="#myModal">'+users[i]+'</a></p>')
+        }
+
+        //adding event delegation
+        $(document).on('click','#val',function(){
+            $('#name').text('@'+$(this).text()) //text method for elements
+            $('#receiverName').val($(this).text()) //val for input fields
+            $('#nameLink').attr('href','/profile/'+$(this).text())
+        })
+
+        $('#numValue').text('('+ users.length+')');
+
+        $('#users').html(ol);
+    })
+
     socket.on('newMessage',function(data){
-        console.log(data.text)
-        console.log(data.room)
+        var template = $('#message-template').html();
+        //use mustache to append that 
+        var msg = Mustache.render(template,{
+            text: data.text,
+            sender: data.from
+        })
+        $('#messages').append(msg)
+
     })
 
 

@@ -11,7 +11,7 @@ const express = require('express'),
 
 
 
-router.get('/',function(req,res){
+router.get('/',middleware.isLoggedIn,function(req,res){
 
     async.parallel([
         function(callback){
@@ -46,7 +46,7 @@ router.get('/',function(req,res){
         //console.log(sub_sort)
 
         //console.log('data: '+dataChunk)
-        res.render('index',{title:'Online Tutor Bot - Home',data:dataChunk,fields:result2})                
+        res.render('index',{title:'Online Tutor Bot - Home',data:dataChunk,fields:result2,user:req.user})                
     })
 })
 

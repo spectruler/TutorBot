@@ -33,7 +33,6 @@ router.post('/upload',function(req,res){
 })
 
 router.post('/info',middleware.isTutorLoggedIn,(req,res)=>{
-    console.log('/info')
     var author = {
         id: req.user._id,
         username: req.user.username,

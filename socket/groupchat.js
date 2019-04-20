@@ -1,4 +1,6 @@
-module.exports = function(io){
+module.exports = function(io,Users){
+
+    const users = new Users()
 
     io.on('connection',(socket)=>{ //server on 
         console.log('User connected')
@@ -6,6 +8,10 @@ module.exports = function(io){
         socket.on('joint',(params,callback)=>{
             //socket.join allows a socket to connect to the particular channel
             socket.join(params.room) 
+
+            users.AddUserData(socket.id,params.name,params.room)
+            //in socket.to() sender of the event will not see the msg hence used io.to
+            io.to(params.room).emit('userList',users.GetUsersList(params.room)) 
 
             callback()
         });
@@ -20,6 +26,15 @@ module.exports = function(io){
                 from: message.sender
             }); 
             callback() //for clearing the textarea
+        })
+
+        socket.on('disconnect',()=>{
+            var user = users.RemoveUser(socket.id)
+
+            if(user){
+                io.to(user.room).emit('userList',users.GetUsersList(user.room))
+            }
+
         })
 
     })
