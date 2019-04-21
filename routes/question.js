@@ -3,7 +3,7 @@ const router = require('express').Router(),
       User = require('../models/user'),
       async = require('async')
 
-router.get('/:id/:problem',middleware.isLoggedIn,(req,res)=>{ //:id belong to the user who is going to post that
+router.get('/:id/group',middleware.isLoggedIn,(req,res)=>{ //:id belong to the user who is going to post that
     const name = req.params.problem
     res.render('publicchat/group',{title:"public chat",user:req.user,groupName:name})
 })

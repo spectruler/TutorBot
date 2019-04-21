@@ -15,8 +15,8 @@ router.get('/',middleware.isLoggedIn,function(req,res){
 
     async.parallel([
         function(callback){
-            Tutor.find({},(err,tutor)=>{
-                    callback(err,tutor)
+            Problem.find({},(err,problem)=>{
+                    callback(err,problem)
             })
         },
 
@@ -28,12 +28,12 @@ router.get('/',middleware.isLoggedIn,function(req,res){
             })
         }
 
-    ],(err,tutor)=>{
+    ],(err,problem)=>{
         if(err){
             console.log(err)
         }
-        const tut = tutor[0] //callbacks using indexes
-        const result2 = tutor[1]; //second callback sinces index starts from 0 
+        const tut = problem[0] //callbacks using indexes //instead of tutor push questions 
+        const result2 = problem[1]; //second callback sinces index starts from 0 
         //console.log(result2)
 
         const dataChunk = []

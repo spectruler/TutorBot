@@ -5,7 +5,6 @@
     <title>Online Tutor Bot - Home</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/group.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
@@ -84,22 +83,25 @@
                         <div class="category-list">
                             <div class="row">
                                 <% _.forEach(val,function(val1){%>
-                                <form action="#" method="post" id="add-fav">
+                                <form action="/" method="post" id="favorite">
                                         <div class="item col-md-4">
-                                            <a style=" text-decoration: none;" href="#">
+                                            <a style=" text-decoration: none;" href="question/<%=val1._id%>/group">
                                                 <div class="thumbnail">
-                                                    <img src="uploads/<%=val1.tutorImage%>"alt="">
+                                                    <img src="uploads/<%=2334%>"alt="">
                                                     <div class="caption">
-                                                        <h4><%=val1.author.firstname%></h4>
+                                                        <h4><%= val1.statement%></h4>
                                                         
                                                         <div class="row">
                                                             <div class="col-xs-12 col-md-6">
                                                                 <p>
-                                                                        <%= val1.subjects %>
+                                                                        <%= val1.tag%>
                                                                 </p>
                                                             </div>
                                                             
                                                             <div class="col-xs-12 col-md-6">
+                                                                <input type="hidden" name="id" id="id" value="<%=val1._id%>"> <!--name of group-->
+                                                                <input type="hidden" name="question" id="club_Name" value="<%=val1.statement%>"> <!--name of group-->
+                                                                <input type="hidden" name="tag" id="tag" value="<%=val1.tag%>">
                                                                 <button class="btn add-fav">
                                                                     Add To Favorite
                                                                 </button>
@@ -123,6 +125,10 @@
   
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js">
+</script>
+<script src="/js/group/sendrequest.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
+<script src="/js/home.js"></script>
 </body>
 </html>
