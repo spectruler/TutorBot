@@ -50,6 +50,23 @@ router.get('/',middleware.isLoggedIn,function(req,res){
     })
 })
 
+router.post('/',middleware.isLoggedIn,(req,res)=>{
+    async.parallel([
+        function(callback){
+            Problem.update({"_id":req.body.id,
+                'fans.username':{$ne: req.user.username}
+            },{
+                $push: {fans:{ username:req.user.username}}
+            },(err,count)=>{
+                console.log(count)
+                callback(err,count);
+            });
+        }
+    ],(err,results)=>{
+        res.redirect('/')
+    })
+})
+
 router.post('/post',middleware.isLoggedIn,(req,res)=>{
     let author = {
         id: req.user._id,
@@ -130,7 +147,9 @@ router.post("/signin",passport.authenticate("local",{
 
 router.get('/logout',(req,res)=>{
     req.logout();
-    res.redirect('/signin')
+    req.session.destroy((err)=>{
+        res.redirect('/signin')
+    })
 })
 
 module.exports = router;

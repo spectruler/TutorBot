@@ -9,6 +9,11 @@ const mongoose = require('mongoose'),
                 },
                 username: String
             },
+            fans: [{
+                id: {type:mongoose.Schema.Types.ObjectId,
+                ref:"User"},
+                username: String
+            }],
             createdDate: {type:Date,default:Date.now()}
       })
 

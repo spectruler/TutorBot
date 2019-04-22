@@ -2,10 +2,9 @@ $(document).ready(function(){
 
     $('#favorite').on('submit',function(e){
         e.preventDefault()
-
         var id = $('#id').val()
-        var qestion = $('#question').val()
         var tag = $('#tag').val()
+        var question = $('#club_Name').val()
 
         $.ajax({
             url: "/",

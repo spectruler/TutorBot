@@ -20,13 +20,15 @@ const express = require('express'),
     User = require('./models/user'),
     Field = require('./models/field'),
     Tutor = require('./models/tutor'),
-    {Users} = require('./middleware/UsersClass')//structuring ES6
+    {Users} = require('./middleware/UsersClass'),//structuring ES6,
+    {Global} = require('./middleware/Global')
 
 //importing routes
 const IndexRoutes = require('./routes'),
       AdminRoutes = require('./routes/admin.js'),
       TutorRoutes = require('./routes/tutor'),
-      QuestionRoutes = require('./routes/question')
+      QuestionRoutes = require('./routes/question'),
+      ResultRoutes = require('./routes/results')
 
 //importing middleware
 const middleware = require('./middleware')
@@ -34,6 +36,7 @@ const middleware = require('./middleware')
 
 require('./socket/groupchat')(io,Users)
 require('./socket/request')(io)
+require('./socket/globalroom')(io,Global)
 
     
 
@@ -81,6 +84,7 @@ app.use(IndexRoutes)
 app.use('/admin',AdminRoutes)
 app.use("/tutor",TutorRoutes)
 app.use('/question',QuestionRoutes)
+app.use(ResultRoutes)
 
 
 //const server = http.createServer(app)

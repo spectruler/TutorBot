@@ -10,6 +10,9 @@ Issues:- user cannot send itself request
 //incase of errors in home page try to change data parameter in route + in grou.ejs and index.ejs
 //In homepage instead of tutor push question
 
+//problem with friendsId and others
+//no group members show
+
 index: group format :---- /request/:id/
                           /problem/ #toall 
                           /tutor/:id/chat
