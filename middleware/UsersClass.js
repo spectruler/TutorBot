@@ -3,9 +3,9 @@ class Users{
         this.users = []
     }
 
-    AddUserData(id,name,room){
+    AddUserData(id,name,room,channelId){
         //destructring is used for same name of object and parameters
-        var users = {id, name, room}
+        var users = {id, name, room,channelId}
         this.users.push(users)
         return users;
     }

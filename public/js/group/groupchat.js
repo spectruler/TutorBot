@@ -6,13 +6,16 @@ $(document).ready(function(){
     var room = $('#groupName').val();
     var sender = $('#sender').val();
 
+    var channelId = $('#channelId').val()
+
     socket.on('connect',()=>{  //listen for connect event
         console.log('Yea! User connected')
 
         //to emit the joint events
         var params = {
             room: room,
-            name: sender
+            name: sender,
+            channelId: channelId
         }
         socket.emit('joint',params,function(){
             console.log('User has joined this channel');
@@ -59,17 +62,19 @@ $(document).ready(function(){
         socket.emit('createMessage',{
             text: msg,
             room: room,
-            sender: sender
+            sender: sender,
+            channelId: channelId
         },function(){ //acknowlegment 
             $('#msg').val(''); // clear the textarea
         }) 
 
         $.ajax({
-            url: "/question/"+room,
+            url: "/question/"+channelId+"/"+room,
             type: "POST",
             data:{
                 message: msg,
-                group: room
+                group: room,
+                channelId: channelId
             },
             success: function(){
                 $('#msg').val('')

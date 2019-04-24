@@ -57,9 +57,9 @@ router.get('/:id/:problem',middleware.isLoggedIn,(req,res)=>{ //:id belong to th
     })
 })
 
-router.post('/:name',function(req,res){
+router.post('/:id/:name',function(req,res){
     //FriendResults.PostRequest(req,res,'/question/'+req.params.id+"/"+req.params.name)
-    FriendResults.PostRequest(req,res,'/question/'+req.params.name)
+    FriendResults.PostRequest(req,res,'/question/'+req.params.id+'/'+req.params.name)
     async.parallel([
        function(callback){
            if(req.body.message){
@@ -67,7 +67,7 @@ router.post('/:name',function(req,res){
                 group.sender = req.user._id;
                 group.body = req.body.message;
                 group.name = req.body.group;
-                //group.channelId = req.body.id;
+                group.channelId = req.body.channelId;
                 group.createdAt = new Date(); 
                 group.save((err,msg)=>{
                     callback(err,msg)
@@ -75,7 +75,7 @@ router.post('/:name',function(req,res){
            }
        } 
     ],(err,results)=>{
-        res.redirect('/question/'+req.params.name)
+        res.redirect('/question/'+req.params.id+'/'+req.params.name)
     })
 
 })
