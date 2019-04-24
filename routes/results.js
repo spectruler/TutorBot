@@ -2,7 +2,6 @@ const router = require('express').Router(),
       Problem = require('../models/problem'),
       async = require('async'),
       Field = require('../models/field'),
-      Tutor = require('../models/tutor'),
       _ = require('lodash'),
       User = require('../models/user'),
       middleware = require('../middleware')
@@ -22,7 +21,7 @@ router.post('/results',middleware.isLoggedIn,(req,res)=>{
 
         },
         function(callback){
-            Tutor.aggregate([
+            User.aggregate([
                 {$group: {_id: "$subjects"}}
             ],(err,result)=>{
                 callback(err,result)
@@ -55,7 +54,7 @@ router.get('/members',middleware.isLoggedIn,(req,res)=>{
 
         },
         function(callback){
-            Tutor.aggregate([
+            User.aggregate([
                 {$group: {_id: "$subjects"}}
             ],(err,result)=>{
                 callback(err,result)
@@ -86,7 +85,7 @@ router.post('/members',(req,res)=>{
 
         },
         function(callback){
-            Tutor.aggregate([
+            User.aggregate([
                 {$group: {_id: "$subjects"}}
             ],(err,result)=>{
                 callback(err,result)

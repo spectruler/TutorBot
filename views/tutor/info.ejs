@@ -6,16 +6,20 @@
                 <div style="width:30%; margin: 25px auto;">
                     <form action="/tutor/info" method="POST">
                         <div class="form-group">
-                            <input class="form-control" type="text" name="tutor[firstname]" value="<%=user.firstname %>" disabled>
+                                <input class="form-control" type="hidden" name="tutor[firstname]" value="<%=user.firstname %>" >
+                                <input type="hidden" name="tutor[firstname]">
+                            <input class="form-control" type="text" name="" value="<%=user.firstname %>" disabled>
                         </div>
 
                         <div class="form-group">
-                                <input class="form-control" type="text" name="tutor[lastname]" value="<%=user.lastname%>" disabled>
+                                <input class="form-control" type="text" name="" value="<%=user.lastname%>" disabled>
+                                <input class="form-control" type="hidden" name="tutor[lastname]" value="<%=user.lastname%>" disabled>
+
                         </div>
 
                         <div class="form-group">
                                 <button class="btn btn-lg upload-btn" type="button">Upload Image</button>
-                                <input type="file" name="tutor[tutorImage]" id="upload-input" style="display:none" required>
+                                <input type="file" name="tutor[userImage]" id="upload-input" style="display:none" required>
                         </div>
 
                         <div class="form-group">

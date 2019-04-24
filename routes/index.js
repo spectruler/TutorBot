@@ -4,7 +4,6 @@ const express = require('express'),
       User = require('../models/user'),
       async = require('async'),
       _ = require('lodash'),
-      Tutor = require('../models/tutor'),
       Field = require('../models/field'),
       middleware = require('../middleware'),
       Problem = require('../models/problem'),
@@ -23,7 +22,7 @@ router.get('/',middleware.isLoggedIn,function(req,res){
         },
 
         function(callback){
-            Tutor.aggregate([
+            User.aggregate([
                 {$group: {_id: "$subjects"}} // check later
             ],(err,result)=>{
                 callback(err,result)
@@ -163,7 +162,7 @@ router.post("/signin",passport.authenticate("local",{
 
     }
     if (req.user.status == 'tutor'){
-        Tutor.findOne({'author.username':req.user.username},(err,tutor)=>{
+        User.findOne({'username':req.user.username},(err,tutor)=>{
             if(err){
                 console.log(err)
             }else{
@@ -176,7 +175,6 @@ router.post("/signin",passport.authenticate("local",{
                     }else{
                         res.redirect('/tutor/add/subject')
                     }
-                    console.log(tutor.subjects)
                 }
             }
         })

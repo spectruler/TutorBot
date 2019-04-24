@@ -7,8 +7,6 @@ var mongoose = require('mongoose'),
         username: {type:String, unique:true},
         password: String,
         status: String, //student / teacher
-        google: {type:String, default: ''},
-        googleTokens: Array,
         sentRequest:[{
                 username: {type: String, default:''}
         }],
@@ -20,7 +18,15 @@ var mongoose = require('mongoose'),
             frientId: {type:mongoose.Schema.Types.ObjectId, ref:'User'},
             friendName:{type:String, default:''}
         }],
-        totalRequest: {type: Number, default:0}        
+        totalRequest: {type: Number, default:0},  
+    
+        
+        userImage: String,
+        graduation: String,
+        school: String,
+        major: String,
+        country: String,
+        subjects: [{type:String, require:true}]
         
     })
 UserSchema.plugin(passportLocalMongoose)

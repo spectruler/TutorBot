@@ -4,6 +4,7 @@ const router = require('express').Router(),
       formidable = require('formidable'),
       Tutor = require('../models/tutor'),
       Field = require("../models/field"),
+      User = require('../models/user'),
       middleware = require('../middleware')
 
 router.get('/info',middleware.isTutorLoggedIn,function(req,res){
@@ -33,14 +34,8 @@ router.post('/upload',function(req,res){
 })
 
 router.post('/info',middleware.isTutorLoggedIn,(req,res)=>{
-    var author = {
-        id: req.user._id,
-        username: req.user.username,
-        firstname: req.user.firstname,
-        lastname: req.user.lastname
-    }
-    req.body.tutor.author = author
-    Tutor.create(req.body.tutor,(err,tutor)=>{
+
+    User.findByIdAndUpdate(req.user._id,req.body.tutor,(err,tutor)=>{
         if(err){
             console.log(err)
             req.flash('error',err)
@@ -49,6 +44,15 @@ router.post('/info',middleware.isTutorLoggedIn,(req,res)=>{
             res.redirect('/tutor/add/subject')
         }
     })
+    // Tutor.create(req.body.tutor,(err,tutor)=>{
+    //     if(err){
+    //         console.log(err)
+    //         req.flash('error',err)
+    //         res.redirect('/tutor/info')
+    //     }else{
+    //         res.redirect('/tutor/add/subject')
+    //     }
+    // })
 })
 
 router.get('/add/subject',middleware.isTutorLoggedIn,(req,res)=>{
@@ -67,11 +71,10 @@ router.get('/add/subject',middleware.isTutorLoggedIn,(req,res)=>{
 
 router.post('/add/subject',middleware.isTutorLoggedIn,(req,res)=>{
     if(req.body.tutor == null){
-        console.log(true)
         req.flash('error','choose atleast one subject')
         return res.redirect('/tutor/add/subject')
     }
-    Tutor.findOne({'author.id':req.user._id},function(err,tutor){
+    User.findById(req.user._id,function(err,tutor){
         if(err){
             console.log(err)
             req.flash('error',err)

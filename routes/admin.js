@@ -30,7 +30,9 @@ router.get('/add',function(req,res){
 })
 
 router.post('/add',function(req,res){
-    console.log(req.body.field)
+    req.body.field.field = req.body.field.field.replace(' ','-')
+    req.body.field.subject = req.body.field.subject.replace(' ','-')
+
     Field.findOne({'field':req.body.field.field},(err,field)=>{
         if (err){
             //field already doesn't exist add
