@@ -63,6 +63,19 @@ $(document).ready(function(){
         },function(){ //acknowlegment 
             $('#msg').val(''); // clear the textarea
         }) 
+
+        $.ajax({
+            url: "/question/"+room,
+            type: "POST",
+            data:{
+                message: msg,
+                group: room
+            },
+            success: function(){
+                $('#msg').val('')
+            }
+        })
+
     })
 
 })

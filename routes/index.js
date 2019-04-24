@@ -7,7 +7,9 @@ const express = require('express'),
       Tutor = require('../models/tutor'),
       Field = require('../models/field'),
       middleware = require('../middleware'),
-      Problem = require('../models/problem')
+      Problem = require('../models/problem'),
+      Message = require('../models/message'),
+      FriendRequest = require('../middleware/friendResults')
 
 
 
@@ -26,7 +28,40 @@ router.get('/',middleware.isLoggedIn,function(req,res){
             ],(err,result)=>{
                 callback(err,result)
             })
-        }
+        },
+
+        function(callback){
+            User.findOne({'username':req.user.username}).populate('request.userId').exec((err,result)=>{
+                callback(err,result)
+            })
+        },
+        function(callback){
+            const nameRegex = new RegExp("^"+req.user.username.toLowerCase(), 'i')
+
+           Message.aggregate([
+               {$match: {$or:[{'senderName':nameRegex},{'receiverName':nameRegex}]}},
+               {$sort:{'createdAt':-1}},
+               {   $group: {"_id":{
+                       "last_message_between":{
+                           $cond:[
+                               {
+                                   $gt: [
+                                       {$substr:["$senderName",0,1]},
+                                       {$substr:["$receiverName",0,1]}
+                                   ]
+                               },
+                               {$concat: ["$senderName"," and ","$receiverName"]},
+                               {$concat: ["$receiverName"," and ","$senderName"]}
+
+                           ]
+                       }
+                   }, "body":{$first:"$$ROOT"}
+               }
+               }],function(err,newResult){
+                   callback(err,newResult);
+               }
+           )
+       }
 
     ],(err,problem)=>{
         if(err){
@@ -34,6 +69,8 @@ router.get('/',middleware.isLoggedIn,function(req,res){
         }
         const tut = problem[0] //callbacks using indexes //instead of tutor push questions 
         const result2 = problem[1]; //second callback sinces index starts from 0 
+        const result3 = problem[2];
+        const result4 = problem[3];
         //console.log(result2)
 
         const dataChunk = []
@@ -46,7 +83,7 @@ router.get('/',middleware.isLoggedIn,function(req,res){
         //console.log(sub_sort)
 
         //console.log('data: '+dataChunk)
-        res.render('index',{title:'Online Tutor Bot - Home',data:dataChunk,fields:result2,user:req.user})                
+        res.render('index',{title:'Online Tutor Bot - Home',chunks:dataChunk,fields:result2,user:req.user,data:result3,chat: result4})                
     })
 })
 
@@ -65,6 +102,7 @@ router.post('/',middleware.isLoggedIn,(req,res)=>{
     ],(err,results)=>{
         res.redirect('/')
     })
+    FriendRequest.PostRequest(req,res,'/')
 })
 
 router.post('/post',middleware.isLoggedIn,(req,res)=>{

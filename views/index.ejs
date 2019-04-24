@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 <body>
-<%- include partials/navbar %>
+<%-  include partials/navbar %>
 <div class="col-md-12">
    <form action="#" method="post">
        <div class="form-group ad-30" style="margin-top:8px;">
@@ -81,13 +81,13 @@
             
             <div class="col-md-9">
                 <div>
-                    <% _.forEach(data,function(val){%>
+                    <% _.forEach(chunks,function(val){%>
                         <div class="category-list">
                             <div class="row">
                                 <% _.forEach(val,function(val1){%>
                                 <form action="/" method="post" id="favorite">
                                         <div class="item col-md-4">
-                                            <a style=" text-decoration: none;" href="question/<%=val1._id%>/<%= val1.tag.replace(/ /g,"-")%>">
+                                            <a style=" text-decoration: none;" href="/question/<%=val1._id%>/<%= val1.tag.replace(/ /g,"-")%>">
                                                 <div class="thumbnail">
                                                     <img src="uploads/<%=2334%>"alt="">
                                                     <div class="caption">
@@ -129,9 +129,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js">
 </script>
+<script src="/js/messagelink.js"></script>
+
 <script src="/js/group/sendrequest.js"></script>
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
 <script src="/js/home.js"></script>
 <script src="/js/global.js"></script>
+<script src="/js/deparam.js"></script>
+
 </body>
 </html>

@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<%-  include ../partials/navbar %>
+<%- include ../partials/navbar %>
 
 <div class="col-md-12">
         <input type="hidden" id="name-user" value="<%= user.username%>">
@@ -100,8 +100,8 @@
                     <div class="row">
                         <div class="new_message_head">
                             <div class="pull-left">
-                            <button class="club_name">
-                                <%= groupName %>
+                            <button id="receiver_name">
+                                
                             </button>
                             </div>
                             <div class="pull-right">
@@ -110,22 +110,37 @@
 
                         <div class="chat_area">
                             <ul id='messages' class="list-unstyled">
-                                <% _.forEach(groupMsg,function(val){%>
-                                    <% if(groupName === val.name /* and channelId === val.channelId*/){%>
-                                <li class="left">
+                                <%if(chats.length > 0){%>
+                                <% _.forEach(chats,function(val){ %>
+                                    <% if(name === val.receiver.username){%>
+                                 <li class="left">
                                     <span class="chat-img1 pull-left">
                                         <img src="http://placehold.it/300x300" class='img-circle' alt="">
                                     </span>
                                     <div class="chats_body1">
                                         <span class="chat-name">
-                                            <%= val.sender.username%>
+                                            <%= val.senderName%>
                                         </span>
                                         <br>
-                                        <%= val.body%>
+                                        <%= val.message%>
                                     </div>
-                                </li>
+                                </li> 
+                                <% } else if(name === val.author.username){%>
+                                    <li class="left">
+                                        <span class="chat-img1 pull-left">
+                                            <img src="http://placehold.it/300x300" class='img-circle' alt="">
+                                        </span>
+                                        <div class="chats_body1">
+                                            <span class="chat-name">
+                                                <%= val.senderName%>
+                                            </span>
+                                            <br>
+                                            <%= val.message%>
+                                        </div>
+                                    </li> 
                                 <%}%>
-                                <%})%>
+                                <% }) %>
+                                <%}%>
                             </ul>
 
                             <!-- In order to use template-->
@@ -149,11 +164,7 @@
                         </div>
 
                         <div class="message_write">
-                            <form  id="message-form" method="post">
-                                <input type="hidden" name="groupName" id="groupName" value="<%= groupName %>">
-                                <input type="hidden" name="sender" id="sender" value="<%=user.username %>">
-                                <input type="hidden" name="channelId" id="channelId" value="<%= channelId%>"> 
-
+                            <form  id="message_form" method="post">
 
                                 <textarea class="form-control" name="message" id="msg" placeholder="Type a message"></textarea>
                                 <div class="clearfix"></div>
@@ -162,59 +173,6 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-3 col-md-3 mob-50 mob-clearfix">
-
-
-                    <div class="new_message_head">
-                        <div class="pull-left">
-                            <button class="club_fans">
-                                <i class="fa fa-users" aria-hidden="true" style="padding-right:15px; color:#4aa1f3 !important;"></i>
-                                Online Users <span id="numValue"></span>
-                            </button>
-                        </div>
-                    </div>
-
-
-
-                    <div class="gr-rightsidebar">
-
-                        <div id="myModal" class="modal fade" role="dialog">
-                            <div class="modal-dialog">
-
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h3 class="modal-title" id="name"></h3>
-                                </div>
-                                <div class="modal-body">
-                                <form action="" method="get" id="add_friend">
-                                    <input type="hidden" name="receiverName" id="receiverName" value="">
-                                    <input type="hidden" name="sender-name" id="sender-name" value="<%= user.username%>">
-                                    <button type="submit" id="friend-add" class="btn add"><i class="fa fa-user"></i> Send Request</button>
-                                    
-                                    <a id="nameLink" class="btn ">View Profile</a>
-
-                                    <div id="myTest">
-                                        
-                                    </div>
-                                </form>
-                                </div>
-                                <div class="modal-footer">
-                                <button type="button" class="btn btn_close" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-12"  id="main">
-                            <div id="users"></div>
-                            
-                        </div>
-
                     </div>
                 </div>
 
@@ -234,21 +192,18 @@ crossorigin="anonymous"></script>
 
 <script src="/socket.io/socket.io.js">
 </script>
-<script src="/js/messagelink.js"></script>
-
-
-<script src="/js/deparam.js"></script>
-
 
 <script src="/js/global.js"></script>
 
 
+<script src="/js/privatechat/private.js"></script>
 
-<script src="/js/group/groupchat.js"></script>
+<script src="/js/messagelink.js"></script>
+
 
 <script src="/js/group/sendrequest.js"></script>
 
-
+<script src="/js/deparam.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
 

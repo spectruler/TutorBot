@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Online Tutor Bot - Home</title>
+    <title>Online Tutor Bot - Members</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -24,7 +24,7 @@
                     <ul class="nav navbar-nav">
                     </ul>
                     <ul class="nav navbar-nav navbar-right" id="reload">
-                      <li><a href="#">Members</a></li>
+                      <li><a href="/members">Members</a></li>
                       <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%=user.username%> 
                         <span class="caret"></span></a>
@@ -41,10 +41,10 @@
               
 
 <div class="col-md-12">
-   <form action="#" method="post">
+   <form action="/members" method="post">
        <div class="form-group ad-30" style="margin-top:8px;">
             <div class="input-group search-style">
-                <input class="form-control new-search-bar"  name="country" id="search" placeholder="Enter Your Club Name" type="text">
+                <input class="form-control new-search-bar"  name="username" id="" placeholder="Enter Tutor email" type="text">
                 <span class="input-group-btn">
                     <button class="btn input-btn" type="" id="search-form">Search</button>
                 </span>
@@ -81,35 +81,7 @@
     <!--input type="hidden" name="name-image" value="<%= user.userImage %>"-->
     <div class="">
         <div class="row">
-            <div class="col-md-3">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="filter-container">
-                            <div class="card">
-                                <form action="/results" method="post">
-                                    <div class="content">
-                                        <p class="filter">
-                                            FILTER
-                                        </p>
-                                        <hr/>
-                                        <select class="form-control" name="country" id="country" >
-                                            <option value="x">Filter By Subjects</option>
-                                            <% _.forEach(fields,function(field){%>
-                                                <% field._id.forEach(function(sub){%>
-                                                    <option value="<%=sub%>"><%=sub%></option>
-                                                <%})%>
-                                            <%})%>
-                                        </select>
-                                        <div class="clearfix"></div>
-                                        <button class="btn add-apply">Apply</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
+           
             <div class="col-md-9">
                 <div>
                     <% _.forEach(chunks,function(val){%>
@@ -117,27 +89,17 @@
                             <div class="row">
                                 <% _.forEach(val,function(val1){%>
                                 <form action="/" method="post" id="favorite">
-                                        <div class="item col-md-4">
-                                            <a style=" text-decoration: none;" href="question/<%=val1._id%>/<%= val1.tag%>">
+                                        <div class="item col-md-3">
+                                            <a style=" text-decoration: none;" href="#">
                                                 <div class="thumbnail">
-                                                    <img src="uploads/<%=2334%>"alt="">
+                                                    <img src="https://placehold.it/500x500>"alt="">
                                                     <div class="caption">
-                                                        <h4><%= val1.statement%> (<strong><%= val1.fans.length %></strong>)</h4>
-                                                        
+                                                            <h4>
+
+                                                            </h4>                                                        
                                                         <div class="row">
                                                             <div class="col-xs-12 col-md-6">
-                                                                <p>
-                                                                        <%= val1.tag%>
-                                                                </p>
-                                                            </div>
-                                                            
-                                                            <div class="col-xs-12 col-md-6">
-                                                                <input type="hidden" name="id" id="id" value="<%=val1._id%>"> <!--name of group-->
-                                                                <input type="hidden" name="club_Name" id="club_Name" value="<%=val1.statement%>"> <!--name of group-->
-                                                                <input type="hidden" name="tag" id="tag" value="<%=val1.tag%>">
-                                                                <button class="btn add-fav">
-                                                                    Add To Favorite
-                                                                </button>
+                                                                <h4 style="color:#4aa1f3"><%= val1.username%></h4>
                                                             </div>
                                                         </div>
                                                     </div>
