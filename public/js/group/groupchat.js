@@ -33,7 +33,6 @@ $(document).ready(function(){
         $(document).on('click','#val',function(){
             $('#name').text('@'+$(this).text()) //text method for elements
             $('#receiverName').val($(this).text()) //val for input fields
-            $('#nameLink').attr('href','/profile/'+$(this).text())
         })
 
         $('#numValue').text('('+ users.length+')');

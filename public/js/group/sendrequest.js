@@ -3,6 +3,7 @@ $(document).ready(function(){
 
     var room = $('#groupName').val()
     var sender = $('#sender').val()
+    var channelId = $('channelId').val()
 
     socket.on('connect',()=>{
         var params = {
@@ -14,8 +15,7 @@ $(document).ready(function(){
     });
 
     socket.on('newTutorRequest',(friend)=>{
-        // load method is used to load data from server at real time
-
+        // load method is used to load data fr
         $('#reload').load(location.href + ' #reload');
 
         $(document).on('click','#accept_friend',function(){
@@ -23,7 +23,7 @@ $(document).ready(function(){
             var senderName = $('#senderName').val()
     
             $.ajax({
-                url: '/question/'+room,
+                url: '/question/'+channelId+'/'+room,
                 type:'POST',
                 data:{
                     senderId:senderId,
@@ -38,9 +38,8 @@ $(document).ready(function(){
     
         $(document).on('click','#cancel_friend',function(){
             var user_Id = $('#user_Id').val()
-     
             $.ajax({
-                url: '/question/'+room,
+                url: '/question/'+channelId+'/'+room,
                 type:'POST',
                 data:{
                     user_Id: user_Id
@@ -60,7 +59,7 @@ $(document).ready(function(){
         var receiverName = $('#receiverName').val()
 
         $.ajax({
-            url:'/question/'+room,
+            url:'/question/'+channelId+'/'+room,
             type: 'POST',
             data:{
                 receiverName: receiverName
@@ -84,7 +83,7 @@ $(document).ready(function(){
         var senderName = $('#senderName').val()
 
         $.ajax({
-            url: '/question/'+room,
+            url: '/question/'+channelId+'/'+room,
             type:'POST',
             data:{
                 senderId:senderId,
@@ -102,7 +101,7 @@ $(document).ready(function(){
     $('#cancel_friend').on('click',function(){
         var user_Id = $('#user_Id').val()
         $.ajax({
-            url: '/question/'+room,
+            url: '/question/'+channelId+'/'+room,
             type:'POST',
             data:{
                 user_Id: user_Id
