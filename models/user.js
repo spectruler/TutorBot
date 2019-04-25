@@ -6,7 +6,7 @@ var mongoose = require('mongoose'),
         lastname: String,
         username: {type:String, unique:true},
         password: String,
-        status: String, //student / teacher
+        status: {type: String, require:true}, //student / teacher
         sentRequest:[{
                 username: {type: String, default:''}
         }],
@@ -21,7 +21,7 @@ var mongoose = require('mongoose'),
         totalRequest: {type: Number, default:0},  
     
         
-        userImage: String,
+        userImage: {type:String, default: "default/Student.png"},
         graduation: String,
         school: String,
         major: String,

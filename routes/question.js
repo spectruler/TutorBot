@@ -4,7 +4,8 @@ const router = require('express').Router(),
       async = require('async'),
       Message = require('../models/message'),
       FriendResults = require('../middleware/friendResults'),
-      Group = require('../models/groupmessage')
+      Group = require('../models/groupmessage'),
+      Problem = require("../models/problem")
 
 router.get('/:id/:problem',middleware.isLoggedIn,(req,res)=>{ //:id belong to the user who is going to post that
     const name = req.params.problem
@@ -47,12 +48,18 @@ router.get('/:id/:problem',middleware.isLoggedIn,(req,res)=>{ //:id belong to th
         Group.find({}).populate('sender').exec((err,result)=>{
             callback(err,result)
         })
+    },
+    function(callback){
+        Problem.findById(id,(err,result)=>{
+            callback(err,result)
+        })
     }
     ],(err,results)=>{
         const result = results[0]
         const result2 = results[1]
         const result3 = results[2]
-         res.render('publicchat/group',{title:"public chat",user:req.user,groupName:name,data:result,chat:result2,groupMsg: result3,channelId:id})
+        const problem = results[3]
+         res.render('publicchat/group',{title:"public chat",user:req.user,groupName:name,data:result,chat:result2,groupMsg: result3,channelId:id,problems:problem})
 
     })
 })

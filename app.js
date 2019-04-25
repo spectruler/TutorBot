@@ -20,6 +20,7 @@ const express = require('express'),
     User = require('./models/user'),
     Field = require('./models/field'),
     Tutor = require('./models/tutor'),
+    Problem = require('./models/problem'),
     FriendResult = require('./middleware/friendResults')
     Message = require('./models/message'),
     {Users} = require('./middleware/UsersClass'),//structuring ES6,

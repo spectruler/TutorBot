@@ -94,7 +94,6 @@ router.post('/',middleware.isLoggedIn,(req,res)=>{
             },{
                 $push: {fans:{ username:req.user.username}}
             },(err,count)=>{
-                console.log(count)
                 callback(err,count);
             });
         }
@@ -110,8 +109,6 @@ router.post('/post',middleware.isLoggedIn,(req,res)=>{
         username: req.user.username
     }
     req.body.problem.author = author
-    console.log('tag: '+req.body.problem.tag)
-    console.log(req.body.problem)
     Problem.create(req.body.problem,(err,problem)=>{
         if(err){
             console.log(err)

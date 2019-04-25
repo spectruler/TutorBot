@@ -37,24 +37,16 @@
 
                                         </div>
                                         <div class="user cover-img">
-                                            <img src="https://placehold.it/300x300" class="img-circle" alt="">
+                                            <img src="/uploads/<%=user.userImage%>" class="img-circle" alt="">
                                         </div>
                                         <div class="content">
                                             <div class="main">
                                                 <h3 class="name"><%= _.upperFirst(user.username.split('@')[0]) %></h3>
-                                                <p class="profession-online">
-                                                    <i class="fa fa-circle online" aria-hidden="true"></i>
-                                                    Online
-                                                </p>
                                                 <p class="text-center">
-                                                    Mantra
+                                                    Group Discussion Problem:<hr/>
+                                                    <%= problems.statement%>
+                                                    <span>by <strong> <%=problems.author.username %></strong></span>
                                                 </p>
-                                            </div>
-                                            <div class="footer">
-                                                <i class="fa fa-mail-forward"></i> 
-                                                <a href="#">
-                                                    View My Profile
-                                                </a>
                                             </div>
                                         </div>
                                     </div>
