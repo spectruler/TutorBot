@@ -31,6 +31,7 @@ $(document).ready(function(){
 
         //adding event delegation
         $(document).on('click','#val',function(){
+            
             $('#name').text('@'+$(this).text()) //text method for elements
             $('#receiverName').val($(this).text()) //val for input fields
         })

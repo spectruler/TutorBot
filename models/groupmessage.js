@@ -7,6 +7,7 @@ var GroupChat = new mongoose.Schema({
     body: String,
     name: String,
     channelId: String,
+    userImage: String,
     createdAt: {type: Date, default: Date.now()}
 
 })

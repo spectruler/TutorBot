@@ -74,6 +74,7 @@ router.post('/:id/:name',function(req,res){
                 group.sender = req.user._id;
                 group.body = req.body.message;
                 group.name = req.body.group;
+                group.userImage = req.user.userImage;
                 group.channelId = req.body.channelId;
                 group.createdAt = new Date(); 
                 group.save((err,msg)=>{

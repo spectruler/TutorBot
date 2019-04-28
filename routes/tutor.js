@@ -156,7 +156,7 @@ router.get('/',middleware.isLoggedIn,(req,res)=>{
         const dataChunk = []
         const chunkSize = 3;
         for (let i = 0 ; i < tut.length;i += chunkSize ){
-            dataChunk.push(tut.slice(i,chunkSize))
+            dataChunk.push(tut.slice(i,i+chunkSize))
         }
         res.render('tutor/index',{title:'Online Tutor Bot - Tutors',chunks:dataChunk,fields:result2,user:req.user,data:result3,chat: result4})                
     })
@@ -224,7 +224,7 @@ router.post('/search',middleware.isLoggedIn,(req,res)=>{
         const dataChunk = []
         const chunkSize = 3;
         for (let i = 0 ; i < tut.length;i += chunkSize ){
-            dataChunk.push(tut.slice(i,chunkSize))
+            dataChunk.push(tut.slice(i,i+chunkSize))
         }
         res.render('tutor/index',{title:'Online Tutor Bot - Tutors',chunks:dataChunk,fields:result2,user:req.user,data:result3,chat: result4})                
     })
@@ -296,7 +296,7 @@ router.post("/results",(req,res)=>{
         const dataChunk = []
         const chunkSize = 3;
         for (let i = 0 ; i < tut.length;i += chunkSize ){
-            dataChunk.push(tut.slice(i,chunkSize))
+            dataChunk.push(tut.slice(i,i+chunkSize))
         }
         res.render('tutor/index',{title:'Online Tutor Bot - Tutors',chunks:dataChunk,fields:result2,user:req.user,data:result3,chat: result4})                
     })

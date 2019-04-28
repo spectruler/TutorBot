@@ -8,7 +8,6 @@ friendResults.PostRequest = function(req,res,url){
     async.parallel([
         function callback(){
             if(req.body.receiverName){
-                console.log('req.body.receiverName in friendResults poped')
                 User.update({
                     'username':req.body.receiverName,
                     'request.userId': {$ne: req.user._id},

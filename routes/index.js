@@ -8,7 +8,8 @@ const express = require('express'),
       middleware = require('../middleware'),
       Problem = require('../models/problem'),
       Message = require('../models/message'),
-      FriendRequest = require('../middleware/friendResults')
+      FriendRequest = require('../middleware/friendResults'),
+      Group = require('../models/groupmessage')
 
 
 
@@ -75,7 +76,7 @@ router.get('/',middleware.isLoggedIn,function(req,res){
         const dataChunk = []
         const chunkSize = 3;
         for (let i = 0 ; i < tut.length;i += chunkSize ){
-            dataChunk.push(tut.slice(i,chunkSize))
+            dataChunk.push(tut.slice(i,i+chunkSize))
         }
 
         const sub_sort = _.sortBy(result2,'_id') //not working
@@ -104,6 +105,7 @@ router.post('/',middleware.isLoggedIn,(req,res)=>{
 })
 
 router.post('/post',middleware.isLoggedIn,(req,res)=>{
+    //add a way to add automatic relative tutors in this group
     let author = {
         id: req.user._id,
         username: req.user.username
@@ -116,9 +118,19 @@ router.post('/post',middleware.isLoggedIn,(req,res)=>{
             res.redirect('/')
         }else{
             req.flash('success','Successfully posted')
+                // find users
+            User.find({"subjects":req.body.problem.tag, "status":"tutor"},(err,user)=>{
+                user.forEach(function(val){
+                    //add group
+                   problem.fans.push({id:user.id,username:user.username})
+                   problem.save()
+                })
+            })
             res.redirect('/')
         }
     })
+
+
 })
 
 router.get("/register",function(req,res){
@@ -136,9 +148,15 @@ router.post("/register",function(req,res){
         }
         passport.authenticate("local")(req,res,()=>{
             req.flash("success","Welcome to online tutor bot "+ user.firstname +" "+ user.lastname)
+
             if (req.body.status == 'student'){
+            user.friendList.push({friendId:user._id,friendName:user.username});
+            user.save();
                 res.redirect("/")
             }else{
+
+            user.friendList.push({friendId:user._id,friendName:user.username});
+            user.save();
                 res.redirect("/tutor/info")
             }
         })

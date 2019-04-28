@@ -14,6 +14,8 @@ const mongoose = require('mongoose'),
                 ref:"User"},
                 username: String
             }],
+            image: {type:String, default:"/default/FILE.jpeg"}
+            ,
             createdDate: {type:Date,default:Date.now()}
       })
 

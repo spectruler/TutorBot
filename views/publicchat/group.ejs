@@ -103,10 +103,10 @@
                         <div class="chat_area">
                             <ul id='messages' class="list-unstyled">
                                 <% _.forEach(groupMsg,function(val){%>
-                                    <% if(groupName === val.name /* and channelId === val.channelId*/){%>
+                                    <% if(groupName === val.name && channelId === val.channelId){%>
                                 <li class="left">
                                     <span class="chat-img1 pull-left">
-                                        <img src="http://placehold.it/300x300" class='img-circle' alt="">
+                                        <img src="../../uploads/<%=val.userImage%>" class='img-circle' alt="">
                                     </span>
                                     <div class="chats_body1">
                                         <span class="chat-name">

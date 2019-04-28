@@ -34,7 +34,7 @@ router.post('/results',middleware.isLoggedIn,(req,res)=>{
         const dataChunk = []
         const chunkSize = 3;
         for (let i = 0 ; i < result1.length;i += chunkSize ){
-            dataChunk.push(result1.slice(i,chunkSize))
+            dataChunk.push(result1.slice(i,i+chunkSize))
         }
 
         res.render('results',{user:req.user, chunks: dataChunk,fields:result2})
@@ -65,9 +65,9 @@ router.get('/members',middleware.isLoggedIn,(req,res)=>{
         const result2 = results[1]
 
         const dataChunk = []
-        const chunkSize = 4;
+        const chunkSize = 3;
         for (let i = 0 ; i < result1.length;i += chunkSize ){
-            dataChunk.push(result1.slice(i,chunkSize))
+            dataChunk.push(result1.slice(i,i+chunkSize))
         }
 
         res.render('members',{user:req.user, chunks: dataChunk,fields:result2})
@@ -96,9 +96,9 @@ router.post('/members',(req,res)=>{
         const result2 = results[1]
 
         const dataChunk = []
-        const chunkSize = 4;
+        const chunkSize = 3;
         for (let i = 0 ; i < result1.length;i += chunkSize ){
-            dataChunk.push(result1.slice(i,chunkSize))
+            dataChunk.push(result1.slice(i,i+chunkSize))
         }
 
         res.render('members',{user:req.user, chunks: dataChunk,fields:result2})
