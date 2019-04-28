@@ -10,10 +10,10 @@
 <body>
 <%-  include partials/navbar %>
 <div class="col-md-12">
-   <form action="#" method="post">
+   <form action="/tutor/search" method="post">
        <div class="form-group ad-30" style="margin-top:8px;">
             <div class="input-group search-style">
-                <input class="form-control new-search-bar"  name="country" id="search" placeholder="Enter Your Club Name" type="text">
+                <input class="form-control new-search-bar"  name="tutorsearch" id="search" placeholder="Search Tutor" type="text">
                 <span class="input-group-btn">
                     <button class="btn input-btn" type="" id="search-form">Search</button>
                 </span>
@@ -47,7 +47,7 @@
 
 <div class="col-md-12">
     <input type="hidden" id="name-user" value="<%= user.username%>">
-    <!--input type="hidden" name="name-image" value="<%= user.userImage %>"-->
+    <input type="hidden" name="name-image" value="<%= user.userImage %>">
     <div class="">
         <div class="row">
             <div class="col-md-3">
