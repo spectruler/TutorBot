@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Online Tutor Bot</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <%- include partials/navbar %>
+
+<div class="container">
+    <div class="row">
+        <h4 style="text-align: center;"> Enter payment information</h4>
+        <div style="width:30%; margin: 25px auto;">
+            <form action="/private/payment/<%=names%>"method="post">
+                <input type="hidden" value="<%= names%>" name="names">
+                <div class="form-group">
+                    Username: 
+                    <input class=" form-control"type="text" name="username" id="username" diabled value="Enter username">
+                </div>
+
+                <div class="form-group">
+                    Card Number
+                    <input class="form-control" type="text" required pattern="[0-9]{12}" id="crdnumber" name="creditNumber" placeholder="Enter card number of length 12">
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-lg btn-primary">Proceed</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+ 
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../socket.io/socket.io.js">
+</script>
+<script src="../js/messagelink.js"></script>
+
+<script src="../js/group/sendrequest.js"></script>
+
+<script src="../js/send.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  
+<script src="../js/home.js"></script>
+<script src="../js/global.js"></script>
+<script src="../js/deparam.js"></script>
+</body>
+</html>

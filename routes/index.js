@@ -17,7 +17,7 @@ router.get('/',middleware.isLoggedIn,function(req,res){
 
     async.parallel([
         function(callback){
-            Problem.find({},(err,problem)=>{
+            Problem.find({fans:{$elemMatch:{username: req.user.username}}},(err,problem)=>{
                     callback(err,problem)
             })
         },
@@ -106,30 +106,59 @@ router.post('/',middleware.isLoggedIn,(req,res)=>{
 
 router.post('/post',middleware.isLoggedIn,(req,res)=>{
     //add a way to add automatic relative tutors in this group
-    let author = {
-        id: req.user._id,
-        username: req.user.username
-    }
-    req.body.problem.author = author
-    Problem.create(req.body.problem,(err,problem)=>{
-        if(err){
-            console.log(err)
-            req.flash('error',err)
-            res.redirect('/')
-        }else{
-            req.flash('success','Successfully posted')
-                // find users
-            User.find({"subjects":req.body.problem.tag, "status":"tutor"},(err,user)=>{
-                user.forEach(function(val){
-                    //add group
-                   problem.fans.push({id:user.id,username:user.username})
-                   problem.save()
-                })
-            })
-            res.redirect('/')
-        }
-    })
+    async.parallel([
 
+        function(callback){
+            let author = {
+                id: req.user._id,
+                username: req.user.username
+            }
+            req.body.problem.author = author
+            Problem.create(req.body.problem,(err,problem)=>{
+                if(err){
+                    console.log(err)
+                    req.flash('error',err)
+                    callback(err,problem)
+                }else{
+                    req.flash('success','Successfully posted')
+                    problem.fans.push({id:req.user._id,username:req.user.username});
+                        // find users
+                    User.find({"subjects":req.body.problem.tag, "status":"tutor"},(err,user)=>{
+                        user.forEach(function(val){
+                            //add group
+                           problem.fans.push({id:val._id,username:val.username})
+
+                        })
+                        problem.save()
+                        callback(err,user)
+                    })
+                    
+                }
+            })
+        
+        }
+
+    ],(err,results)=>{
+        res.redirect('/')
+    })
+    
+
+})
+
+
+router.post("/delete/:id/:name",(req,res)=>{
+    async.parallel([
+        function(callback){
+            Problem.findByIdAndRemove(req.params.id,(err,prob)=>{
+                console.log(prob)
+                callback(err,prob)
+            })
+
+        }
+
+    ],(err,results)=>{
+        res.redirect("/");
+    })
 
 })
 

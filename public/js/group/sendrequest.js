@@ -66,7 +66,6 @@ $(document).ready(function(){
             },
             success: function(){
                 //to show real time notification
-                console.log('#add_friend1')
                 socket.emit('tutorRequest',{ 
                     receiver: receiverName,
                     sender: sender

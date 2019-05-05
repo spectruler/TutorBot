@@ -25,11 +25,11 @@
 
 
 <div class="col-md-12">
-        <form action="/post" method="post">
+        <form action="/post" method="post" id="post">
             <div class="form-group ad-30" style="margin-top:8px;">
                  <div class="input-group search-style">
                         <textarea class="form-control" name="problem[statement]" id="msg" placeholder="Enter Questions"></textarea>
-                        <select name="problem[tag]" required>
+                        <select name="problem[tag]" id="tagged" required>
                                 <% _.forEach(fields,function(field){%>
                                     <% field._id.forEach(function(sub){%>
                                         <option value="<%=sub%>"><%=sub%></option>
@@ -83,11 +83,11 @@
                 <div>
                     <% _.forEach(chunks,function(val){%>
                         <div class="category-list">
-                            <div class="row">
+                            <div class="row" id="repeat">
                                 <% _.forEach(val,function(val1){%>
-                                <form action="/" method="post" id="favorite">
+                                <form action="/" method="post" id="favorite" >
                                         <div class="item col-md-4">
-                                            <a style=" text-decoration: none;" href="/question/<%=val1._id%>/<%= val1.tag.replace(/ /g,"-")%>">
+                                            <a style=" text-decoration: none;" href='/question/<%=val1._id%>/<%= val1.tag.replace(/ /g,"-")%>'>
                                                 <div class="thumbnail">
                                                     <img src="uploads/<%= val1.image%>"alt="">
                                                     <div class="caption">
@@ -104,6 +104,12 @@
                                                                 <input type="hidden" name="id" id="id" value="<%=val1._id%>"> <!--name of group-->
                                                                 <input type="hidden" name="club_Name" id="club_Name" value="<%=val1.statement%>"> <!--name of group-->
                                                                 <input type="hidden" name="tag" id="tag" value="<%=val1.tag%>">
+                                                                <!-- show delete when user is author of the post -->
+                                                                <% if(val1.author.username == user.username){ %>
+                                                                    <a class="btn btn-danger" id="delete_post" name='/delete/<%=val1._id%>/<%= val1.tag.replace(/ /g,"-")%>'>
+                                                                        Delete
+                                                                    </a>
+                                                                <%}%>
                                                                 <button class="btn add-fav">
                                                                     Add To Favorite
                                                                 </button>
@@ -137,6 +143,8 @@
 <script src="/js/home.js"></script>
 <script src="/js/global.js"></script>
 <script src="/js/deparam.js"></script>
+
+<script src="/js/delete_post.js"></script>
 
 </body>
 </html> 

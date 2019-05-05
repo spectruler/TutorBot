@@ -61,6 +61,7 @@ friendResults.PostRequest = function(req,res,url){
                     },
                     $inc: {totalRequest: -1}
                 },(err,count)=>{
+                    console.log(count)
                     callback(err,count)
                 })
             }
@@ -91,7 +92,7 @@ friendResults.PostRequest = function(req,res,url){
             }
         },
        
-        function(callback){
+        function(callback){ //removing request for cancelling at receiver side
             if(req.body.user_Id){
                 User.update({
                     '_id': req.user._id,
@@ -108,10 +109,10 @@ friendResults.PostRequest = function(req,res,url){
                 })
             }
         },
-        function(callback){
+        function(callback){ //removing sent request at cancelling request
             if(req.body.user_Id){
                 User.update({
-                    '_id': req.body.userId,
+                    '_id': req.body.user_Id,
                     'sentRequest.username':{$eq: req.user.username}
                 },{
                     $pull:{
