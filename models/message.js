@@ -16,7 +16,7 @@ var MessageSchema = new mongoose.Schema({
     isRead: {type: Boolean, default: false},
     createdAt: {type: Date, default: Date.now},
     paymentRequired: {type: Boolean, default: false},
-    paymentApproved: {type:Boolean} //it was default false
+    paymentApproved: {type:Boolean, default:false} //it was default false
      
 });
 

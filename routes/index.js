@@ -179,6 +179,7 @@ router.post("/register",function(req,res){
             req.flash("success","Welcome to online tutor bot "+ user.firstname +" "+ user.lastname)
 
             if (req.body.status == 'student'){
+                user.userImage = "default/Student.png";
             user.friendList.push({friendId:user._id,friendName:user.username});
             user.save();
                 res.redirect("/")
@@ -210,7 +211,7 @@ router.post("/signin",passport.authenticate("local",{
             if(err){
                 console.log(err)
             }else{
-                if(tutor == null){
+                if(tutor.school == null){
                     res.redirect('/tutor/info')
                 }else{
                     //tutor info exist check for subjects

@@ -28,7 +28,7 @@
         <form action="/post" method="post">
             <div class="form-group ad-30" style="margin-top:8px;">
                  <div class="input-group search-style">
-                        <textarea class="form-control" name="problem[statement]" id="msg" placeholder="Enter Questions"></textarea>
+                        <textarea required class="form-control" name="problem[statement]" id="msg" placeholder="Enter Questions"></textarea>
                         <select name="problem[tag]" required>
                                 <% _.forEach(fields,function(field){%>
                                     <% field._id.forEach(function(sub){%>

@@ -21,7 +21,7 @@ var mongoose = require('mongoose'),
         totalRequest: {type: Number, default:0},  
     
         
-        userImage: {type:String, default: "default/Student.png"},
+        userImage: {type:String},
         graduation: String,
         school: String,
         major: String,

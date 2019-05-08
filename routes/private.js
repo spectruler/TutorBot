@@ -6,30 +6,7 @@ const router = require('express').Router(),
       FriendResults = require('../middleware/friendResults')
 
 
-router.get('/chat/:name',middleware.isLoggedIn,(req,res)=>{
-
-    async.parallel([
-
-        function callback(){
-            if(req.user.status === 'student'){
-                var names = req.params.name.split('-')
-                if(names[1] == req.user.username){
-                    Message.find({senderName:req.user.username, receiverName:names[0]},(err,msg)=>{
-                        if(msg.length >= 5 && msg[0].paymentApproved == false){
-                            callback(err,{t:"true"})
-                        }
-                    })
-
-                }
-                }
-        }
-
-    ],(err,results)=>{
-        const r1 = results[0]
-        if(r1.t==='true'){
-            res.redirect('/private/payment/'+req.params.name);
-        }
-    })
+router.get('/chat/:name',middleware.isFriend,(req,res)=>{
     
     async.parallel([
 
@@ -85,7 +62,7 @@ router.get('/chat/:name',middleware.isLoggedIn,(req,res)=>{
     })
 })
 
-router.post('/chat/:name',middleware.isLoggedIn,(req,res,next)=>{
+router.post('/chat/:name',middleware.isFriend,(req,res,next)=>{
     const params= req.params.name.split('-')
     const nameParams = params[0]
     const nameRegex = new RegExp("^"+nameParams.toLowerCase(), 'i') // receiver username
@@ -182,13 +159,20 @@ router.get('/payment/:name',middleware.isLoggedIn,(req,res)=>{
 
 router.post('/payment/:name',(req,res)=>{
     var names = req.params.name.split("-");
-    Message.find({senderName:names[1],receiverName:names[0]},(err,msg)=>{
-        msg.forEach(function(m){
-            m.paymentApproved = true;
-            m.save();
-        })
+    async.parallel([
+        function(callback){
+            Message.find({senderName:names[1],receiverName:names[0]},(err,msg)=>{
+                msg.forEach(function(m){
+                    m.paymentApproved = true;
+                    m.save();
+                })
+                callback(err,msg);
+            })
+        }
+
+    ],(err,results)=>{
+        res.redirect('/private/chat/'+req.params.name)
     })
-    res.redirect('/private/chat/'+req.params.name)
 
 })
 
