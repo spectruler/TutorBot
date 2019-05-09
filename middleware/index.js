@@ -64,6 +64,8 @@ middlewareObj.isFriend = function(req,res,next){
                                 })
                 
                             }
+                        }else{
+                            next()
                         }
                     }
                 }

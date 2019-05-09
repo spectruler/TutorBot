@@ -10,7 +10,7 @@ Online Tutor Bot System requires:
 a) mongoDB -- for database
 b) NodeJs  -- for back end development
 
-After installing above setups open the project in vscod and open terminal  or open terminal in project folder directly  and run "npm install" to install dependencies and then run project using "node app.js" or "nodemon app". To restore database use ""
+After installing above setups open the project in vscod and open terminal  or open terminal in project folder directly  and run "npm install" to install dependencies and then run project using "node app.js" or "nodemon app". To restore database use command "mongorestore -d online_tutor_bot ~/online_tutor_bot"
 
 Go to the your chosen browser and type URL: "localhost:3000/".
 

@@ -24,8 +24,7 @@ const express = require('express'),
     FriendResult = require('./middleware/friendResults')
     Message = require('./models/message'),
     {Users} = require('./middleware/UsersClass'),//structuring ES6,
-    {Global} = require('./middleware/Global'),
-    stripe = require('stripe')('sk_test_jy4FGIiG1t2fZ05GLzlaH4qO00gdss74pa')
+    {Global} = require('./middleware/Global')
 
 //importing routes
 const IndexRoutes = require('./routes'),
